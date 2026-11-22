@@ -31,16 +31,7 @@
     h1 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
     p { font-size: 13px; color: #94a3b8; margin-bottom: 24px; line-height: 1.4; }
     #g-btn-container { display: flex; justify-content: center; }
-    #appFrame {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100dvh;
-      border: none;
-      display: none;
-      z-index: 9999;
-    }
+    .status { font-size: 12px; color: #34d399; margin-top: 16px; display: none; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -49,9 +40,8 @@
     <h1>POS & Control de Stock</h1>
     <p>Inicia sesión con tu cuenta Google autorizada para acceder al sistema.</p>
     <div id="g-btn-container"></div>
+    <div id="statusMsg" class="status">Abriendo sistema POS...</div>
   </div>
-
-  <iframe id="appFrame" allow="clipboard-write"></iframe>
 
   <script>
     const GOOGLE_CLIENT_ID = "730658342794-pco5q0hu3lv6ppqttq6hf0q4tqg7aplb.apps.googleusercontent.com";
@@ -78,10 +68,8 @@
     }
 
     function launchApp(token) {
-      document.getElementById("loginBox").style.display = "none";
-      const frame = document.getElementById("appFrame");
-      frame.src = GAS_WEBAPP_URL + "?token=" + encodeURIComponent(token);
-      frame.style.display = "block";
+      document.getElementById("statusMsg").style.display = "block";
+      window.location.replace(GAS_WEBAPP_URL + "?token=" + encodeURIComponent(token));
     }
 
     function handleCredentialResponse(response) {
